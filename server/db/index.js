@@ -12,8 +12,17 @@ User.hasMany(Event);
 User.belongsToMany(Event, { through: List, foreignKey: 'userId' });
 Event.belongsToMany(User, { through: List, foreignKey: 'eventId' });
 
+User.hasMany(Event);
+List.belongsTo(User);
+
+//TO VIEW MAGIC METHODS FOR EACH MODEL:
+console.log('User MM>>> ', Object.keys(User.prototype));
+console.log('Event MM>>> ', Object.keys(Event.prototype));
+console.log('List MM>>> ', Object.keys(List.prototype));
+
 module.exports = {
   db,
   User,
   Event,
+  List,
 }

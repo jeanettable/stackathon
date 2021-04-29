@@ -25,12 +25,16 @@ const Event = db.define('event', {
         type: Sequelize.TEXT,
     },
     contractType: {
-        type: Sequelize.ENUM('Broadway', 'Off Broadway', 'Dinner Theatre', 'Midsize Theatre'),
+        type: Sequelize.ENUM('Broadway', 'LORT', 'Off Broadway', 'Dinner Theatre'),
     },
     productionCo: {
         type: Sequelize.STRING,
         allowNull: false,
     },
+    jobLocation: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    }
 })
 
 module.exports = Event

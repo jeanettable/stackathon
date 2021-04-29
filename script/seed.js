@@ -1,58 +1,169 @@
-'use strict'
+const { v4: uuid } = require('uuid');
+const {db, User, Event, List } = require('../server/db')
 
-const {db, models: {User} } = require('../server/db')
+const users = [
+  {
+    email: 'jeanette@test.io',
+    password: 'jeanettepw',
+    isProduction: true,
+    last: 'Abell',
+    first: 'Jeanette',
+  },
+  {
+    email: 'ashley@test.io',
+    password: 'ashleypw',
+    isProduction: true,
+    last: 'Marinelli',
+    first: 'Ashley',
+  },
+  {
+    email: 'greer@test.io',
+    password: 'greerpw',
+    isProduction: true,
+    last: 'Gisy',
+    first: 'Greer',
+  },
+  {
+    email: 'sam@test.io',
+    password: 'sampw123',
+    isProduction: false,
+    last: 'Jam',
+    first: 'Samantha',
+  },
+  {
+    email: 'natalie@test.io',
+    password: 'nataliepw',
+    isProduction: false,
+    last: 'Williams',
+    first: 'Natalie',
+  },
+  {
+    email: 'larry@test.io',
+    password: 'larrypw',
+    isProduction: true,
+    last: 'Lozier',
+    first: 'Larry',
+  },
+  {
+    email: 'dion@test.io',
+    password: 'dionpw123',
+    isProduction: false,
+    last: 'James',
+    first: 'Dion',
+  },
+  {
+    email: 'benny@test.io',
+    password: 'bennypw',
+    isProduction: false,
+    last: 'Benny',
+    first: 'Jones',
+  },
+  {
+    email: 'jeanette2@test.io',
+    password: 'jeanettepw',
+    isProduction: false,
+    last: 'Abell',
+    first: 'Jeanette',
+  },
+  {
+    email: 'olivia@test.io',
+    password: 'oliviapw',
+    isProduction: false,
+    last: 'Olivia',
+    first: 'Amato',
+  },
+];
 
-/**
- * seed - this function clears the database, updates tables to
- *      match the models, and populates the database.
- */
-async function seed() {
-  await db.sync({ force: true }) // clears db and matches models to tables
-  console.log('db synced!')
+const events = [
+  {
+    title: 'Fall of The House Lab - Female Dancers',
+    callType: 'open call',
+    eventDate: '2021-07-06',
+    eventTime: '09:30',
+    jobDuration: 'August 2021 - October 2021',
+    description: 'About: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Requirements: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ultrices neque ornare aenean euismod elementum nisi quis eleifend. Volutpat blandit aliquam etiam erat velit scelerisque. Metus dictum at tempor commodo ullamcorper a. Fusce ut placerat orci nulla.',
+    contractType: 'Off Broadway',
+    productionCo: 'Marinelli Moving Pictures',
+    jobLocation: 'Salt Lake City, UT',
+    userId: 1
+  },
+  {
+    title: 'Fall of The House Lab - Male Actors',
+    callType: 'open call',
+    eventDate: '2021-07-06',
+    eventTime: '13:30',
+    jobDuration: 'August 2021 - October 2021',
+    description: 'About: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Requirements: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ultrices neque ornare aenean euismod elementum nisi quis eleifend. Volutpat blandit aliquam etiam erat velit scelerisque. Metus dictum at tempor commodo ullamcorper a. Fusce ut placerat orci nulla.',
+    contractType: 'Off Broadway',
+    productionCo: 'Marinelli Moving Pictures',
+    jobLocation: 'Salt Lake City, UT',
+    userId: 1
+  },
+  {
+    title: 'Music Man - Ensemble Dancers',
+    callType: 'EPA',
+    eventDate: '2021-05-28',
+    eventTime: '10:00',
+    jobDuration: 'Summer 2021',
+    description: 'About: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Preparation: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Other: Ultrices neque ornare aenean euismod elementum nisi quis eleifend. Volutpat blandit aliquam etiam erat velit scelerisque. Metus dictum at tempor commodo ullamcorper a. Fusce ut placerat orci nulla.',
+    contractType: 'LORT',
+    productionCo: 'Blythe Center for Arts & Humanities',
+    jobLocation: 'Blythe, TX',
+    userId: 5
+  },
+  {
+    title: 'Hamilton - Dancers',
+    callType: 'ECC',
+    eventDate: '2021-08-04',
+    eventTime: '10:30',
+    jobDuration: '2022 seasonal contract',
+    description: 'About: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Preparation: Dignissim cras tincidunt lobortis feugiat vivamus at augue eget. Egestas dui id ornare arcu odio. Arcu non odio euismod lacinia at quis risus sed. Ut venenatis tellus in metus vulputate. Quis risus sed vulputate odio ut enim blandit volutpat. Diam vulputate ut pharetra sit amet aliquam. Ut aliquam purus sit amet luctus venenatis lectus magna fringilla. Fermentum et sollicitudin ac orci phasellus egestas tellus rutrum tellus.',
+    contractType: 'Broadway',
+    productionCo: 'Andrew Femenella & Associates',
+    jobLocation: 'New York, NY', 
+    userId: 2
+  },
+]
 
-  // Creating Users
-  const users = await Promise.all([
-    User.create({ username: 'cody', password: '123' }),
-    User.create({ username: 'murphy', password: '123' }),
-  ])
-
-  console.log(`seeded ${users.length} users`)
-  console.log(`seeded successfully`)
-  return {
-    users: {
-      cody: users[0],
-      murphy: users[1]
-    }
-  }
-}
-
-/*
- We've separated the `seed` function from the `runSeed` function.
- This way we can isolate the error handling and exit trapping.
- The `seed` function is concerned only with modifying the database.
-*/
-async function runSeed() {
-  console.log('seeding...')
+ const seed = async () => {
   try {
-    await seed()
-  } catch (err) {
-    console.error(err)
-    process.exitCode = 1
-  } finally {
-    console.log('closing db connection')
-    await db.close()
-    console.log('db connection closed')
-  }
-}
+    await db.sync( { force: true } );
 
-/*
-  Execute the `seed` function, IF we ran this module directly (`node seed`).
-  `Async` functions always return a promise, so we can use `catch` to handle
-  any errors that might occur inside of `seed`.
-*/
-if (module === require.main) {
-  runSeed()
-}
+    await Promise.all(
+      users.map((user) => {
+        return User.create(user);
+      })
+    );
+
+    await Promise.all(
+      events.map((event) => {
+        return Event.create(event);
+      })
+    );
+
+    // PRINTS OBJECTS TO CONSOLE:
+    // console.log('allUsers>>> ', allUsers);
+    // console.log('allEvents>>> ', allEvents);
+
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 
 // we export the seed function for testing purposes (see `./seed.spec.js`)
-module.exports = seed
+module.exports = seed;
+
+if (require.main === module) {
+  seed()
+    .then(() => {
+      console.log('Seeding success!');
+      db.close();
+    })
+    .catch((err) => {
+      console.error('Uh oh! Something went wrong!');
+      console.error(err);
+      db.close();
+    });
+}
+
