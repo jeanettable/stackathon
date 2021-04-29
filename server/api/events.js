@@ -13,3 +13,12 @@ router.get('/', async (req, res, next) => {
       next(err)
     }
   });
+
+  router.get('/:eventId', async (req, res, next) => {
+    try {
+      const event = await Event.findByPk(req.params.id);
+      res.json(event);
+    } catch (err) {
+      next(err)
+    }
+  });

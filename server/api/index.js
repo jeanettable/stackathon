@@ -2,7 +2,7 @@ const router = require('express').Router()
 const { isLoggedIn, isOwner, isListOwner, isProduction } = require('../middleware');
 module.exports = router
 
-// main view for job-seekers is the event postings fetch
+// main view for job-seekers is the event postings fetch, no protections necessary
 router.use('/events', require('./events'));
 // for editing job-seeker profile:
 router.use('/users/edit/:userId', isLoggedIn, isOwner, require('./users'));
