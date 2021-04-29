@@ -3,6 +3,7 @@ const {db, User, Event, List } = require('../server/db')
 
 const users = [
   {
+    id: 1,
     email: 'jeanette@test.io',
     password: 'jeanettepw',
     isProduction: true,
@@ -10,6 +11,7 @@ const users = [
     first: 'Jeanette',
   },
   {
+    id: 2,
     email: 'ashley@test.io',
     password: 'ashleypw',
     isProduction: true,
@@ -17,6 +19,7 @@ const users = [
     first: 'Ashley',
   },
   {
+    id: 3,
     email: 'greer@test.io',
     password: 'greerpw',
     isProduction: true,
@@ -24,13 +27,14 @@ const users = [
     first: 'Greer',
   },
   {
+    id: 4,
     email: 'sam@test.io',
     password: 'sampw123',
     isProduction: false,
     last: 'Jam',
     first: 'Samantha',
   },
-  {
+  { id: 5, 
     email: 'natalie@test.io',
     password: 'nataliepw',
     isProduction: false,
@@ -38,6 +42,7 @@ const users = [
     first: 'Natalie',
   },
   {
+    id: 6, 
     email: 'larry@test.io',
     password: 'larrypw',
     isProduction: true,
@@ -45,6 +50,7 @@ const users = [
     first: 'Larry',
   },
   {
+    id: 7,
     email: 'dion@test.io',
     password: 'dionpw123',
     isProduction: false,
@@ -52,6 +58,7 @@ const users = [
     first: 'Dion',
   },
   {
+    id: 8,
     email: 'benny@test.io',
     password: 'bennypw',
     isProduction: false,
@@ -59,13 +66,14 @@ const users = [
     first: 'Jones',
   },
   {
+    id: 9,
     email: 'jeanette2@test.io',
     password: 'jeanettepw',
     isProduction: false,
     last: 'Abell',
     first: 'Jeanette',
   },
-  {
+  { id: 10,
     email: 'olivia@test.io',
     password: 'oliviapw',
     isProduction: false,

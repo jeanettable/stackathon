@@ -8,6 +8,34 @@ const List = db.define('list', {
         autoIncrement: true,
         allowNull: false,
       },
-})
+    eventTitle: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    ownerId: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+    },
+});
 
-module.exports = List
+const listEntry = db.define('listEntry', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+    allowNull: false,
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  listId: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  }
+});
+
+module.exports = {
+  List,
+  listEntry,
+}
