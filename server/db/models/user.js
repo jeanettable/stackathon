@@ -13,6 +13,7 @@ const User = db.define('user', {
   },
   password: {
     type: Sequelize.STRING,
+    allowNull: false,
   },
   isProduction: {
     type: Sequelize.BOOLEAN,
@@ -46,7 +47,7 @@ User.prototype.generateToken = function() {
  * classMethods
  */
 User.authenticate = async function( { email, password } ){
-    const user = await this.findOne( {where: { email }} )
+    const user = await this.findOne( { where: { email } } )
     if (!user || !(await user.correctPassword(password))) {
       const error = Error('Incorrect email or password');
       error.status = 401;
@@ -58,7 +59,9 @@ User.authenticate = async function( { email, password } ){
 User.findByToken = async function(token) {
   try {
     const {id} = await jwt.verify(token, process.env.JWT)
-    const user = User.findByPk(id)
+    const user = User.findByPk(id, {
+      attributes: [ 'id', 'email', 'last', 'first', 'isProduction' ]
+    });
     if (!user) {
       throw 'nooo'
     }

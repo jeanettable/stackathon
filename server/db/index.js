@@ -2,18 +2,36 @@
 
 const db = require('./db')
 
-const User = require('./models/User')
+const User = require('./models/user')
 const Event = require('./models/event')
 const { List, listEntry } = require('./models/list')
+const Detail = require('./models/detail')
 
 //associations could go here!
 User.hasMany(Event);  //intended for production-users only
 
-User.belongsToMany(Event, { through: List, foreignKey: 'ownerId' });
+// User.belongsToMany(Event, { through: List, foreignKey: 'ownerId' });
 Event.belongsToMany(User, { through: List, foreignKey: 'eventId' });
+//add-ons
+User.hasMany(List);
+List.belongsTo(User);
 
-List.hasMany(listEntry);
-User.hasOne(listEntry); // creates unique constraint?: one user, one entry per list
+// List.hasMany(listEntry);
+// User.hasMany(listEntry); // creates unique constraint?: OR one user, one entry per list
+List.belongsToMany(User, {
+  through: listEntry,
+  foreignKey: 'userId',
+});
+User.belongsToMany(List, {
+  through: listEntry,
+  foreignKey: 'listId',
+  onDelete: 'SET NULL',
+});
+
+User.hasOne(Detail);
+Detail.belongsTo(User);
+
+
 
 //TO VIEW MAGIC METHODS FOR EACH MODEL:
 console.log('User MM>>> ', Object.keys(User.prototype));
@@ -25,4 +43,5 @@ module.exports = {
   User,
   Event,
   List,
+  Detail,
 }

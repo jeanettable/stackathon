@@ -2,6 +2,7 @@ const router = require('express').Router()
 const { User } = require('../db')
 module.exports = router
 
+//POST /auth/login
 router.post('/login', async (req, res, next) => {
   try {
     res.send({ token: await User.authenticate(req.body)}); 
@@ -10,14 +11,17 @@ router.post('/login', async (req, res, next) => {
   }
 })
 
-
+//POST /auth/signup
 router.post('/signup', async (req, res, next) => {
   try {
+    console.log('req.body>>> ', req.body);
     const user = await User.create(req.body)
-    res.send({token: await user.generateToken()})
+    // user not able to be created right now...not printing ln 19
+    console.log('user>>> ', user);
+    res.send( {token: await user.generateToken()} )
   } catch (err) {
     if (err.name === 'SequelizeUniqueConstraintError') {
-      res.status(401).send('User already exists')
+      res.status(401).send('User already exists.')
     } else {
       next(err)
     }

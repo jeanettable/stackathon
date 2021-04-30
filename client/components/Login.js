@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { authenticateLogin } from '../store';
+import { authenticateLogin } from '../store/auth';
 import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { Button, TextField, Container, makeStyles, Grid, Box } from '@material-ui/core';

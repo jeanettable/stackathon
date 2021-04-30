@@ -1,15 +1,16 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
 /**
  * COMPONENT
  */
 export const Home = props => {
-  const {username} = props
+  console.log('home props>>>', props);
+  const { first } = props;
 
   return (
     <div>
-      <h3>Welcome, {username}</h3>
+      <h3>Welcome, {first}!</h3>
     </div>
   )
 }
@@ -19,7 +20,7 @@ export const Home = props => {
  */
 const mapState = state => {
   return {
-    username: state.auth.username
+    first: state.auth.first
   }
 }
 

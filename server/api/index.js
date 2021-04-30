@@ -14,8 +14,8 @@ router.use('/users/:userId', isLoggedIn, require('./users'));
 router.use('/lists', isLoggedIn, isProduction, isListOwner, require('./lists'));
 router.use('/lists/:listId', isLoggedIn, isProduction, isListOwner, require('./lists'));
 
-router.use((req, res, next) => {
+router.use( (req, res, next) => {
   const error = new Error('Not Found')
   error.status = 404
   next(error)
-})
+});

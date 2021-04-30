@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { authenticateSignup } from '../store';
+import { authenticateSignup } from '../store/auth';
 import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { Button, TextField, MenuItem, Container, makeStyles, Grid, Box } from '@material-ui/core';
@@ -134,8 +134,7 @@ const SignUpFormApp = withFormik({
   handleSubmit(values, { props, setSubmitting }) {
     console.log('signup submit hit!');
     setSubmitting(true);
-    // props.dispatch(authenticateSignup(values.email, values.password, values.last, values.first, values.isProduction));
-    props.dispatch(authenticateSignup( ...values ));
+    props.dispatch(authenticateSignup(values.email, values.password,values.isProduction, values.last, values.first));
     setSubmitting(false);
   },
 })(SignUpForm);

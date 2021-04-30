@@ -12,10 +12,10 @@ const List = db.define('list', {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    ownerId: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-    },
+    // ownerId: {
+    //   type: Sequelize.INTEGER,
+    //   allowNull: false,
+    // },
 });
 
 const listEntry = db.define('listEntry', {
@@ -25,8 +25,8 @@ const listEntry = db.define('listEntry', {
     autoIncrement: true,
     allowNull: false,
   },
-  name: {
-    type: Sequelize.STRING,
+  userId: {
+    type: Sequelize.INTEGER,
     allowNull: false,
   },
   listId: {

@@ -139,6 +139,7 @@ const events = [
 
     await Promise.all(
       users.map((user) => {
+        console.log('seed user instance>>>', user);
         return User.create(user);
       })
     );
