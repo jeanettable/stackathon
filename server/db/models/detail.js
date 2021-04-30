@@ -2,6 +2,9 @@ const Sequelize = require('sequelize');
 const db = require('../db')
 
 const Detail = db.define('detail', {
+    displayName: {
+        type: Sequelize.STRING,
+    },
     location: {
         type: Sequelize.STRING,
     },
