@@ -4,6 +4,7 @@ import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Home from './components/Home';
+import AllEvents from './components/AllEvents';
 import {me} from './store'
 
 /**
@@ -22,6 +23,7 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route path="/home" component={Home} />
+            <Route path='/events' exact component={AllEvents} />
             <Redirect to="/home" />
           </Switch>
         ) : (
@@ -29,6 +31,7 @@ class Routes extends Component {
             <Route path='/' exact component={ Login } />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
+            <Route path='/events' exact component={AllEvents} />
           </Switch>
         )}
       </div>

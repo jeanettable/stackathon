@@ -8,10 +8,10 @@ const List = db.define('list', {
         autoIncrement: true,
         allowNull: false,
       },
-    eventTitle: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
+    // eventTitle: {
+    //   type: Sequelize.STRING,
+    //   allowNull: false,
+    // },
     // ownerId: {
     //   type: Sequelize.INTEGER,
     //   allowNull: false,

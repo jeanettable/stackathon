@@ -8,16 +8,14 @@ const { List, listEntry } = require('./models/list')
 const Detail = require('./models/detail')
 
 //associations could go here!
-User.hasMany(Event);  //intended for production-users only
+User.hasMany(Event);  //intended for production-users only**
 
 // User.belongsToMany(Event, { through: List, foreignKey: 'ownerId' });
 Event.belongsToMany(User, { through: List, foreignKey: 'eventId' });
-//add-ons
+
 User.hasMany(List);
 List.belongsTo(User);
 
-// List.hasMany(listEntry);
-// User.hasMany(listEntry); // creates unique constraint?: OR one user, one entry per list
 List.belongsToMany(User, {
   through: listEntry,
   foreignKey: 'userId',
