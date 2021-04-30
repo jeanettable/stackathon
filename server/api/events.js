@@ -2,6 +2,7 @@ const router = require('express').Router()
 const { Event } = require('../db')
 module.exports = router
 
+// GET api/events
 router.get('/', async (req, res, next) => {
     try {
       const events = await Event.findAll({
@@ -14,9 +15,11 @@ router.get('/', async (req, res, next) => {
     }
   });
 
+  // GET api/events/:eventId
   router.get('/:eventId', async (req, res, next) => {
     try {
       const event = await Event.findByPk(req.params.id);
+      console.log('event grabbed inside api route>>>', event);
       res.json(event);
     } catch (err) {
       next(err)

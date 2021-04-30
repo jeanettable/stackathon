@@ -1,11 +1,12 @@
-import React, {Component, Fragment} from 'react'
-import {connect} from 'react-redux'
-import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { withRouter, Route, Switch, Redirect } from 'react-router-dom'
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Home from './components/Home';
 import AllEvents from './components/AllEvents';
-import {me} from './store'
+import SingleEvent from './components/SingleEvent';
+import { me } from './store'
 
 /**
  * COMPONENT
@@ -16,24 +17,28 @@ class Routes extends Component {
   }
 
   render() {
-    const { isLoggedIn, isProduction, isListOwner } = this.props
+    const { isLoggedIn, isProduction, isOwner, isListOwner } = this.props
+    // ^ where are these attached to props??
 
     return (
       <div>
-        {isLoggedIn ? (
           <Switch>
+            <Route path='/' exact component={Login} />
             <Route path="/home" component={Home} />
+            {!isLoggedIn && <Route path="/login" component={Login} />}
+            {!isLoggedIn && <Route path="/signup" component={Signup} />}
             <Route path='/events' exact component={AllEvents} />
+            <Route path='/events/:eventId' exact component={SingleEvent} />
+            {isLoggedIn && isProduction 
+            ||
+            isLoggedIn && isOwner 
+            && <Route path="/users/:userId" exact component={ProfileView} />}
+            {isLoggedIn && isOwner && <Route path="/profile/:id" exact component={EditProfile} />}
+            {isProduction && <Route exact path="/production/events" component={CreateEvent} />}
+            {isProduction && <Route exact path="/production/events/:eventId" component={EditEvent} />}
+            {/* {isProduction && <Route exact path="/users" component={AllUsers} />} */}
             <Redirect to="/home" />
           </Switch>
-        ) : (
-          <Switch>
-            <Route path='/' exact component={ Login } />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
-            <Route path='/events' exact component={AllEvents} />
-          </Switch>
-        )}
       </div>
     )
   }

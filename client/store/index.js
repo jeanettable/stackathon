@@ -4,10 +4,12 @@ import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import eventsReducer from './events'
 import auth from './auth'
+import singleEventReducer from './singleEvent'
 
 const reducer = combineReducers({ 
   auth ,
   events: eventsReducer,
+  singleEvent: singleEventReducer,
 });
 
 const middleware = composeWithDevTools(

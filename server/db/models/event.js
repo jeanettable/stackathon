@@ -34,7 +34,11 @@ const Event = db.define('event', {
     jobLocation: {
         type: Sequelize.STRING,
         allowNull: false,
-    }
+    },
+    eventLocation: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
 })
 
 module.exports = Event

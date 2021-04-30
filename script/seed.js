@@ -93,6 +93,7 @@ const events = [
     contractType: 'Off Broadway',
     productionCo: 'Marinelli Moving Pictures',
     jobLocation: 'Salt Lake City, UT',
+    eventLocation: 'Ripley Grier Studios, NY',
     userId: 1
   },
   {
@@ -105,6 +106,7 @@ const events = [
     contractType: 'Off Broadway',
     productionCo: 'Marinelli Moving Pictures',
     jobLocation: 'Salt Lake City, UT',
+    eventLocation: 'Ripley Grier Studios, NY',
     userId: 1
   },
   {
@@ -117,6 +119,7 @@ const events = [
     contractType: 'LORT',
     productionCo: 'Blythe Center for Arts & Humanities',
     jobLocation: 'Blythe, TX',
+    eventLocation: 'Spaceworks LIC, NY',
     userId: 5
   },
   {
@@ -129,6 +132,7 @@ const events = [
     contractType: 'Broadway',
     productionCo: 'Andrew Femenella & Associates',
     jobLocation: 'New York, NY', 
+    eventLocation: 'Alvin Ailey Center, NY',
     userId: 2
   },
 ]
