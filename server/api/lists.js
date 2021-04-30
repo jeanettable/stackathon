@@ -21,7 +21,7 @@ router.get('/:listId', async (req, res, next) => {
     try {
         const list = await listEntry.findAll({
             where: {
-                listId = req.params.listId,
+                listId: req.params.listId,
                 },
                 // explicitly select only attributes wanted for all events view
                 attributes: [ 'id', 'name' ]

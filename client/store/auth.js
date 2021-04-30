@@ -11,7 +11,7 @@ const SET_AUTH = 'SET_AUTH'
 /**
  * ACTION CREATORS
  */
-const setAuth = auth => ({type: SET_AUTH, auth})
+const setAuth = auth => ( {type: SET_AUTH, auth} )
 
 /**
  * THUNK CREATORS
@@ -28,15 +28,25 @@ export const me = () => async dispatch => {
   }
 }
 
-export const authenticate = (username, password, method) => async dispatch => {
+export const authenticateLogin = (email, password) => async (dispatch) => {
   try {
-    const res = await axios.post(`/auth/${method}`, {username, password})
-    window.localStorage.setItem(TOKEN, res.data.token)
-    dispatch(me())
+    const res = await axios.post(`/auth/login`, { email, password });
+    window.localStorage.setItem(TOKEN, res.data.token);
+    dispatch(me());
   } catch (authError) {
-    return dispatch(setAuth({error: authError}))
+    return dispatch(setAuth({ error: authError }));
   }
-}
+};
+
+export const authenticateSignup = (email, password, first, last, isProduction) => async (dispatch) => {
+  try {
+    const res = await axios.post(`/auth/signup`, { email, password, first, last, isProduction });
+    window.localStorage.setItem(TOKEN, res.data.token);
+    dispatch(me());
+  } catch (authError) {
+    return dispatch(setAuth({ error: authError }));
+  }
+};
 
 export const logout = () => {
   window.localStorage.removeItem(TOKEN)
