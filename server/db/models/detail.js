@@ -14,6 +14,9 @@ const Detail = db.define('detail', {
     role: {
         type: Sequelize.STRING,
     },
+    link: {
+        type: Sequelize.STRING,
+    },
     resume: {
         // will store a URL type endpoint
         type: Sequelize.STRING,

@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const User = require('../db')
+const { User, Detail } = require('../db')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -14,4 +14,18 @@ router.get('/', async (req, res, next) => {
   } catch (err) {
     next(err)
   }
-})
+});
+
+// GET /api/users/:userId       // for profile viewing
+router.get('/users/:userId', async (req, res, next) => {
+  try {
+      const profileDetails = await Detail.findOne({
+          where: {
+              userId: req.params.userId,
+          }
+      });
+      res.json(profileDetails);
+  } catch (err)    {
+      next(err)
+  }
+});

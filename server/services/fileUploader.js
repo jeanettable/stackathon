@@ -16,14 +16,33 @@ const upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: 'stackathon-bucket-1',
+    contentType: multerS3.AUTO_CONTENT_TYPE,
     acl: 'public-read',
     metadata: function (req, file, cb) {
-      cb(null, {fieldName: 'TESTING_META_DATA'});
+      cb(null, Object.assign({}, req.body));
     },
     key: function (req, file, cb) {
-      cb(null, Date.now().toString())
+      cb(null, req.params.id + Date.now().toString() + '.jpg')
     }
   })
 });
 
-module.exports = upload;
+const upload2 = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'stackathon-bucket-1',
+    contentType: multerS3.AUTO_CONTENT_TYPE,
+    acl: 'public-read',
+    metadata: function (req, file, cb) {
+      cb(null, Object.assign({}, req.body));
+    },
+    key: function (req, file, cb) {
+      cb(null, req.params.id + Date.now().toString() + '.pdf')
+    }
+  })
+});
+
+module.exports = {
+  upload,
+  upload2
+};
