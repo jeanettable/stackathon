@@ -16,6 +16,7 @@ const upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: 'stackathon-bucket-1',
+    acl: 'public-read',
     metadata: function (req, file, cb) {
       cb(null, {fieldName: 'TESTING_META_DATA'});
     },

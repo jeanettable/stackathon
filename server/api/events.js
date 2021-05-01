@@ -18,8 +18,7 @@ router.get('/', async (req, res, next) => {
   // GET api/events/:eventId
   router.get('/:eventId', async (req, res, next) => {
     try {
-      const event = await Event.findByPk(req.params.id);
-      console.log('event grabbed inside api route>>>', event);
+      const event = await Event.findByPk(req.params.eventId);
       res.json(event);
     } catch (err) {
       next(err)
