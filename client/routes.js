@@ -33,7 +33,7 @@ class Routes extends Component {
             ||
             isLoggedIn && isOwner 
             && <Route path="/users/:userId" exact component={ProfileView} />}
-            {isLoggedIn && isOwner && <Route path="/profile/:id" exact component={EditProfile} />}
+            {isLoggedIn && isOwner && <Route path="/users/:userId/edit" exact component={EditProfile} />}
             {isProduction && <Route exact path="/production/events" component={CreateEvent} />}
             {isProduction && <Route exact path="/production/events/:eventId" component={EditEvent} />}
             {/* {isProduction && <Route exact path="/users" component={AllUsers} />} */}

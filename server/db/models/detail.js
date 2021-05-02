@@ -20,10 +20,13 @@ const Detail = db.define('detail', {
     resume: {
         // will store a URL type endpoint
         type: Sequelize.STRING,
+        // add image placeholder
     },
     headshot: {
         // will store a URL type endpoint
         type: Sequelize.STRING,
+                // add image placeholder
+
     },
 });
 

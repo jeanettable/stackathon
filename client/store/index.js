@@ -5,11 +5,15 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import eventsReducer from './events'
 import auth from './auth'
 import singleEventReducer from './singleEvent'
+import detailsReducer from './userDetails'
+import singleDetailReducer from './fileDetail'
 
 const reducer = combineReducers({ 
-  auth ,
+  auth,
   events: eventsReducer,
   singleEvent: singleEventReducer,
+  details: detailsReducer,
+  fileDetail: singleDetailReducer,
 });
 
 const middleware = composeWithDevTools(

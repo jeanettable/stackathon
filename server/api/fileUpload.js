@@ -13,11 +13,15 @@ router.post('/image-upload', function (req, res) {
 });
 
 // POST api/users/:userId/edit/pdf-upload
-router.post('/pdf-upload', function (req, res) {
-    singlePdfUpload(req, res, function(err) {
-        //handle error
-        return res.json( { 'pdfUrl' : req.file.location } )
-    });
+router.post('/pdf-upload', function (req, res, next) {
+    try {
+        singlePdfUpload(req, res, function(err) {
+            //handle error
+            return res.json( { 'pdfUrl' : req.file.location } )
+        });
+    } catch (err) {
+        next (err)
+    } 
 });
 
 module.exports = router

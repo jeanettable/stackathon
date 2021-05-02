@@ -10,7 +10,8 @@ router.use('/events', require('./events'));
 // lists and viewing all users is a production user accessible only piece of site
 // not sure how to deal with both production users and profile-owners being able to view profile
 router.use('/users', isLoggedIn, isProduction, require('./users'));
-router.use('/users/:userId', isLoggedIn, require('./editProfile'));
+router.use('/users/:userId', isLoggedIn, require('./users'));
+
 router.use('/users/:userId/edit', isLoggedIn, isOwner, require('./editProfile'));
 router.use('/users/:userId/edit/image-upload', isLoggedIn, isOwner, require('./fileUpload'));
 router.use('/users/:userId/edit/pdf-upload', isLoggedIn, isOwner, require('./fileUpload'));
