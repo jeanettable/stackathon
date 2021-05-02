@@ -16,7 +16,7 @@ router.post('/signup', async (req, res, next) => {
   try {
     console.log('req.body>>> ', req.body);
     const user = await User.create(req.body)
-    // user not able to be created right now...not printing ln 19
+    // user not able to be created right now...not printing ln 20
     console.log('user>>> ', user);
     res.send( {token: await user.generateToken()} )
   } catch (err) {

@@ -20,7 +20,7 @@ const setUserDetails = (details) => {
   }; 
 
   // thunks
-  export const fetchUserDetails = (userId) => {
+  export const getUserDetails = (userId) => {
     return async (dispatch) => {
       try {
         const { data: details } = await axios.get(`/api/users/${userId}`);

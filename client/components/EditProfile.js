@@ -14,15 +14,6 @@ import {
   Box,
 } from "@material-ui/core";
 
-import {
-  Grid,
-  Button,
-  Box,
-  makeStyles,
-  Container,
-
-} from "@material-ui/core";
-
 const useStyles = makeStyles(() => ({
   formContainer: {
     margin: "1rem auto",
@@ -30,9 +21,12 @@ const useStyles = makeStyles(() => ({
   form: {
     width: "100%",
   },
+  button: {
+    backgroundColor: '#52b788',
+  }
 }));
 
-const EditProfile = ({ values, errors, isSubmitting, setFieldValue }) => {
+const EditProfile = ( { values, errors, isSubmitting, setFieldValue } ) => {
   const classes = useStyles();
 
   return (
@@ -91,29 +85,44 @@ const EditProfile = ({ values, errors, isSubmitting, setFieldValue }) => {
             </Grid>
             {/* //resume & headshot inserts here */}
             <Grid>
+              <label>Headshot file:</label>
               <input
                 as={TextField}
-                id="file"
+                accept="image/*"
+                id="raised-img-button"
                 name="headshot"
                 type="file"
+                style={ {display: 'none'} }
                 onChange={(event) => {
                   setFieldValue("headshot", event.currentTarget.files[0]);
                 }}
               />
+              <label htmlFor="raised-img-button">
+                <Button variant="contained" component="span" className={classes.button} >
+                  Choose File
+                </Button>
+              </label>
             </Grid>
             <Grid>
+            <label>Resume file:</label>
             <input
               as={TextField}
-              id="file"
+              id="raised-pdf-button"
               name="resume"
               type="file"
+              style={ {display: 'none'} }
               onChange={(event) => {
                 setFieldValue("resume", event.currentTarget.files[0]);
               }}
             />
+            <label htmlFor="raised-pdf-button">
+                <Button variant="contained" component="span" className={classes.button} >
+                  Choose File
+                </Button>
+              </label>
             </Grid>
             <Grid>
-            {isOwner && (
+            {/* {isOwner && ( */}
                       <Grid item container spacing={2}>
                         <Grid item>
                           <Button
@@ -123,11 +132,10 @@ const EditProfile = ({ values, errors, isSubmitting, setFieldValue }) => {
                             size="small"
                             disableElevation
                             disabled={isSubmitting}
-                            onClick={handleSubmit}
                             >Update</Button>
                         </Grid>
                       </Grid>
-                    )}
+                    {/* )} */}
             </Grid>
           </Grid>
         </Form>
@@ -137,13 +145,14 @@ const EditProfile = ({ values, errors, isSubmitting, setFieldValue }) => {
 };
 
 const EditProfileApp = withFormik({
-  mapPropsToValues() {
+  mapPropsToValues( { fullName } ) {
     return {
       displayName: fullName || "",
+      // additional pre-population possible depending on how the details in store/state end up working...
     };
   },
   validationSchema: Yup.object().shape({
-    displayName: Yup.string().required("Your profile should at least display a name."),
+    fullName: Yup.string().required("Your profile should at least display a name."),
   }),
   handleSubmit(values, { props, setSubmitting }) {
     const { displayName, location, contactTel, role, headshot, resume } = values;

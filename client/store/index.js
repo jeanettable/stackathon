@@ -12,7 +12,7 @@ const reducer = combineReducers({
   auth,
   events: eventsReducer,
   singleEvent: singleEventReducer,
-  details: detailsReducer,
+  userDetails: detailsReducer,
   fileDetail: singleDetailReducer,
 });
 

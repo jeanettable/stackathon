@@ -12,7 +12,7 @@ const isLoggedIn = async (req, res, next) => {
 
 // for controlling profile viewing
 const isOwner = (req, res, next) => {
-    if (req.user.id == req.params.userId) {
+    if (req.user.id === req.params.userId) {
       next();
     } else {
       const error = new Error('not authorized');

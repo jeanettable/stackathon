@@ -35,6 +35,7 @@ Detail.belongsTo(User);
 console.log('User MM>>> ', Object.keys(User.prototype));
 console.log('Event MM>>> ', Object.keys(Event.prototype));
 console.log('List MM>>> ', Object.keys(List.prototype));
+console.log('Detail MM>>> ', Object.keys(Detail.prototype));
 
 module.exports = {
   db,

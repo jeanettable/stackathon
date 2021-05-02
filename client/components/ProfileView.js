@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getUserDetails } from '../store/userDetails';
 import { Link as RouterLink } from 'react-router-dom';
+// import { isLoggedIn } from '../../server/middleware';
 
 import {
   Grid,
@@ -40,10 +41,11 @@ const ProfileView = (props) => {
   const classes = useStyles();
 
   useEffect(() => {
-    props.getUserDetails(props.match.params.userId);
+    props.fetchUserDetails(props.match.params.userId);
   }, []);
 
   const { userDetails, userId } = props;
+  console.log('PV userDetails>>>', userDetails);
 
   return (
     <Container>
@@ -87,10 +89,9 @@ const ProfileView = (props) => {
                     <Grid item>
                       <Typography component="h6" variant="h6">
                         <strong>Link: </strong> 
-                        <Link to={userDetails.link} >{userDetails.link}</Link>
+                        <RouterLink to={userDetails.link} >footage/reel</RouterLink>
                       </Typography>
                     </Grid>
-                    {isOwner && (
                       <Grid item container spacing={2}>
                         <Grid item>
                           <Button
@@ -104,7 +105,6 @@ const ProfileView = (props) => {
                           </Button>
                         </Grid>
                       </Grid>
-                    )}
                   </Grid>
                 </CardContent>
               </Grid>

@@ -6,6 +6,8 @@ import Signup from './components/Signup';
 import Home from './components/Home';
 import AllEvents from './components/AllEvents';
 import SingleEvent from './components/SingleEvent';
+import ProfileView from './components/ProfileView';
+import EditProfile from './components/EditProfile';
 import { me } from './store'
 
 /**
@@ -29,11 +31,8 @@ class Routes extends Component {
             {!isLoggedIn && <Route path="/signup" component={Signup} />}
             <Route path='/events' exact component={AllEvents} />
             <Route path='/events/:eventId' exact component={SingleEvent} />
-            {isLoggedIn && isProduction 
-            ||
-            isLoggedIn && isOwner 
-            && <Route path="/users/:userId" exact component={ProfileView} />}
-            {isLoggedIn && isOwner && <Route path="/users/:userId/edit" exact component={EditProfile} />}
+            <Route path="/users/:userId" exact component={ProfileView} />
+            <Route path="/users/:userId/edit" exact component={EditProfile} />
             {isProduction && <Route exact path="/production/events" component={CreateEvent} />}
             {isProduction && <Route exact path="/production/events/:eventId" component={EditEvent} />}
             {/* {isProduction && <Route exact path="/users" component={AllUsers} />} */}

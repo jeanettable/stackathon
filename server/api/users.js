@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
 // GET /api/users/:userId       // for profile viewing
 router.get('/users/:userId', async (req, res, next) => {
   try {
-      const profileDetails = await Detail.findOne({
+      const profileDetails = await User.getDetail({
           where: {
               userId: req.params.userId,
           }

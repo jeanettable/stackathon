@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 /** Reformatted with Formik: */
-const SignUpForm = ({ values, errors, touched, handleChange, isSubmitting }) => {
+const SignUpForm = ({ values, errors, touched, isSubmitting }) => {
   const classes = useStyles();
 
   return (

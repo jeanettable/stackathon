@@ -19,7 +19,6 @@ const _updateHeadshot = (imageUrl) => {
     };
   };
 
-//   add following thunks: setProfileImage, setProfilePdf --> **needs to go to a singleDetailReducer??
   export const setProfileImage = (userId) => {
      return async (dispatch) => {
         try {
@@ -35,7 +34,7 @@ const _updateHeadshot = (imageUrl) => {
  export const setProfilePdf = (userId) => {
     return async (dispatch) => {
        try {
-           // need to strip image endpoint off data sent back by this route
+           // need to strip pdf endpoint off data sent back by this route
            const { data: pdfUrl } = await axios.put(`/api/users/${userId}/edit/pdf-upload`);
            dispatch(_updateResume(pdfUrl));
        } catch (er) {
@@ -44,8 +43,9 @@ const _updateHeadshot = (imageUrl) => {
     }
 };
 
-// singleDetailReducer
-export default function singleDetailReducer(state = {...state.details}, action) {
+
+// reducer
+export default function singleDetailReducer(state = {}, action) {
     switch (action.type) {
       case SET_IMAGE:
         return {...state, headshot: action.imageUrl};
