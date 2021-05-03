@@ -13,8 +13,8 @@ router.use('/users', isLoggedIn, isProduction, require('./users'));
 router.use('/users/:userId', isLoggedIn, require('./users'));
 
 router.use('/users/:userId/edit', isLoggedIn, isOwner, require('./editProfile'));
-router.use('/users/:userId/edit/image-upload', isLoggedIn, isOwner, require('./fileUpload'));
-router.use('/users/:userId/edit/pdf-upload', isLoggedIn, isOwner, require('./fileUpload'));
+router.use('/image-upload', require('./imageUpload'));
+router.use('/pdf-upload', require('./pdfUpload'));
 
 // router.use('/lists', isLoggedIn, isProduction, isListOwner, require('./lists'));
 

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { updateUserDetails } from "../store/userDetails";
-import { setProfileImage, setProfilePdf } from '../store/fileDetail';
+import { setProfileImage, setProfilePdf } from "../store/fileDetail";
 
 import {
   Button,
@@ -22,11 +22,11 @@ const useStyles = makeStyles(() => ({
     width: "100%",
   },
   button: {
-    backgroundColor: '#52b788',
-  }
+    backgroundColor: "#52b788",
+  },
 }));
 
-const EditProfile = ( { values, errors, isSubmitting, setFieldValue } ) => {
+const EditProfile = ({ values, errors, isSubmitting, setFieldValue }) => {
   const classes = useStyles();
 
   return (
@@ -92,50 +92,58 @@ const EditProfile = ( { values, errors, isSubmitting, setFieldValue } ) => {
                 id="raised-img-button"
                 name="headshot"
                 type="file"
-                style={ {display: 'none'} }
+                style={{ display: "none" }}
                 onChange={(event) => {
                   setFieldValue("headshot", event.currentTarget.files[0]);
                 }}
               />
               <label htmlFor="raised-img-button">
-                <Button variant="contained" component="span" className={classes.button} >
+                <Button
+                  variant="contained"
+                  component="span"
+                  className={classes.button}
+                >
                   Choose File
                 </Button>
               </label>
             </Grid>
             <Grid>
-            <label>Resume file:</label>
-            <input
-              as={TextField}
-              id="raised-pdf-button"
-              name="resume"
-              type="file"
-              style={ {display: 'none'} }
-              onChange={(event) => {
-                setFieldValue("resume", event.currentTarget.files[0]);
-              }}
-            />
-            <label htmlFor="raised-pdf-button">
-                <Button variant="contained" component="span" className={classes.button} >
+              <label>Resume file:</label>
+              <input
+                as={TextField}
+                id="raised-pdf-button"
+                name="resume"
+                type="file"
+                style={{ display: "none" }}
+                onChange={(event) => {
+                  setFieldValue("resume", event.currentTarget.files[0]);
+                }}
+              />
+              <label htmlFor="raised-pdf-button">
+                <Button
+                  variant="contained"
+                  component="span"
+                  className={classes.button}
+                >
                   Choose File
                 </Button>
               </label>
             </Grid>
             <Grid>
-            {/* {isOwner && ( */}
-                      <Grid item container spacing={2}>
-                        <Grid item>
-                          <Button
-                            type="submit"
-                            variant="contained"
-                            color="primary"
-                            size="small"
-                            disableElevation
-                            disabled={isSubmitting}
-                            >Update</Button>
-                        </Grid>
-                      </Grid>
-                    {/* )} */}
+              <Grid item container spacing={2}>
+                <Grid item>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    disableElevation
+                    disabled={isSubmitting}
+                  >
+                    Update
+                  </Button>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </Form>
@@ -145,26 +153,46 @@ const EditProfile = ( { values, errors, isSubmitting, setFieldValue } ) => {
 };
 
 const EditProfileApp = withFormik({
-  mapPropsToValues( { fullName } ) {
+  mapPropsToValues({ fullName, headshot, resume }) {
     return {
       displayName: fullName || "",
       // additional pre-population possible depending on how the details in store/state end up working...
+      headshot,
+      resume,
     };
   },
   validationSchema: Yup.object().shape({
-    fullName: Yup.string().required("Your profile should at least display a name."),
+    fullName: Yup.string().required(
+      "Your profile should at least display a name."
+    ),
   }),
   handleSubmit(values, { props, setSubmitting }) {
-    const { displayName, location, contactTel, role, headshot, resume } = values;
+    const {
+      displayName,
+      location,
+      contactTel,
+      role,
+      headshot,
+      resume,
+    } = values;
     console.log("profile save hit!");
     setSubmitting(true);
-    if(headshot)    {
-        props.dispatch(setProfileImage(userId));
+    if (headshot) {
+      props.dispatch(setProfileImage(userId));
     }
-    if(resume) {
-        props.dispatch(setProfilePdf(userId));
+    if (resume) {
+      props.dispatch(setProfilePdf(userId));
     }
-    props.dispatch(updateUserDetails(displayName, location, contactTel, role, headshot, resume));
+    props.dispatch(
+      updateUserDetails(
+        displayName,
+        location,
+        contactTel,
+        role,
+        headshot,
+        resume
+      )
+    );
     setSubmitting(false);
   },
   enableReinitialize: true,
@@ -174,6 +202,8 @@ const mapStateToProps = (state) => {
   return {
     fullName: `${state.auth.first} ${state.auth.last}`,
     userId: state.auth.id,
+    resume: state.fileDetail.resume,
+    headshot: state.fileDetail.headshot,
   };
 };
 

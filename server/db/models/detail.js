@@ -20,13 +20,11 @@ const Detail = db.define('detail', {
     resume: {
         // will store a URL type endpoint
         type: Sequelize.STRING,
-        // add image placeholder
     },
     headshot: {
         // will store a URL type endpoint
         type: Sequelize.STRING,
-                // add image placeholder
-
+        defaultValue: 'https://www.pngitem.com/middle/hhmRJo_profile-icon-png-image-free-download-searchpng-employee/',
     },
 });
 

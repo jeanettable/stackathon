@@ -1,48 +1,44 @@
-const aws = require('aws-sdk');
-const multer = require('multer');
-const multerS3 = require('multer-s3');
+// const aws = require('aws-sdk');
+// const multer = require('multer');
+const S3 = require('aws-sdk/clients/s3');
+const fs = require('fs');
+// const multerS3 = require('multer-s3');
 require('dotenv').config()
 
+module.exports = { uploadFile, getFileStream }
+// exports.uploadFile = uploadFile;
 
-aws.config.update({
-    secretAccessKey: process.env.S3_SECRET_KEY,
-    accessKeyId: process.env.S3_ACCESS_ID,
-    region: 'us-west-1',
+const accessKeyId = process.env.AWS_ACCESS_KEY;
+const secretAccessKey = process.env.AWS_SECRET_KEY;
+// const secretS3Key = process.env.S3_SECRET_KEY;
+// const accessS3Id = process.env.S3_ACCESS_ID;
+
+const s3 = new S3({
+  region: 'us-west-1',
+  accessKeyId,
+  secretAccessKey
 })
 
-const s3 = new aws.S3();
- 
-const upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: 'stackathon-bucket-1',
-    contentType: multerS3.AUTO_CONTENT_TYPE,
-    acl: 'public-read',
-    metadata: function (req, file, cb) {
-      cb(null, Object.assign({}, req.body));
-    },
-    key: function (req, file, cb) {
-      cb(null, req.params.id + Date.now().toString() + '.jpg')
-    }
-  })
-});
+// upload a file to s3:
+function uploadFile(file) {
+  const fileStream = fs.createReadStream(file.path);
 
-const upload2 = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: 'stackathon-bucket-1',
-    contentType: multerS3.AUTO_CONTENT_TYPE,
-    acl: 'public-read',
-    metadata: function (req, file, cb) {
-      cb(null, Object.assign({}, req.body));
-    },
-    key: function (req, file, cb) {
-      cb(null, req.params.id + Date.now().toString() + '.pdf')
-    }
-  })
-});
+  const uploadParams = {
+    Bucket: 'stackathon-bucket-1',
+    Body: fileStream,
+    Key: file.filename,
+  }
 
-module.exports = {
-  upload,
-  upload2
-};
+  return s3.upload(uploadParams).promise()
+}
+
+// download functions w/ readstream
+function getFileStream(fileKey) {
+  const downloadParams = {
+    Key: fileKey,
+    Bucket: 'stackathon-bucket-1',
+  }
+  return s3.getObject(downloadParams).createReadStream();
+}
+
+

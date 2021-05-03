@@ -58,7 +58,8 @@ const ProfileView = (props) => {
                   {userDetails.displayName}
                 </Typography>
                 <Box mt={2}>
-                  <CardMedia className={classes.image} image={userDetails.headshot} />
+                  {/* <CardMedia component="img" className={classes.image} src={`/image-upload/${userDetails.headshot}`} /> */}
+                  <CardMedia component="img" className={classes.image} src ="https://stackathon-bucket-1.s3-us-west-1.amazonaws.com/aa135953d7288669811cadc837220c81" />
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6}>

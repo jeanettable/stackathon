@@ -20,12 +20,12 @@ class Routes extends Component {
 
   render() {
     const { isLoggedIn, isProduction, isOwner, isListOwner } = this.props
-    // ^ where are these attached to props??
+    // attached to props below in mapState
 
     return (
       <div>
           <Switch>
-            <Route path='/' exact component={Login} />
+            <Route path='/' exact component={Home} />
             <Route path="/home" component={Home} />
             {!isLoggedIn && <Route path="/login" component={Login} />}
             {!isLoggedIn && <Route path="/signup" component={Signup} />}
@@ -33,8 +33,10 @@ class Routes extends Component {
             <Route path='/events/:eventId' exact component={SingleEvent} />
             <Route path="/users/:userId" exact component={ProfileView} />
             <Route path="/users/:userId/edit" exact component={EditProfile} />
-            {isProduction && <Route exact path="/production/events" component={CreateEvent} />}
-            {isProduction && <Route exact path="/production/events/:eventId" component={EditEvent} />}
+            {/* <Route path="/image-upload/:key" />
+            <Route path="/pdf-upload/:key" /> */}
+            {/* {isProduction && <Route exact path="/production/events" component={CreateEvent} />} */}
+            {/* {isProduction && <Route exact path="/production/events/:eventId" component={EditEvent} />} */}
             {/* {isProduction && <Route exact path="/users" component={AllUsers} />} */}
             <Redirect to="/home" />
           </Switch>
@@ -50,7 +52,8 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
-    isLoggedIn: !!state.auth.id
+    isLoggedIn: !!state.auth.id,
+    isProduction: state.auth.isProduction,
   }
 }
 

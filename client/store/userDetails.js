@@ -23,7 +23,12 @@ const setUserDetails = (details) => {
   export const getUserDetails = (userId) => {
     return async (dispatch) => {
       try {
-        const { data: details } = await axios.get(`/api/users/${userId}`);
+        const { data: details } = await axios.get(`/api/users/${userId}`, {
+          headers: {
+            authorization: localStorage.getItem('token'),
+          },
+        });
+        console.log('details in thunk>>>', details);
         dispatch(setUserDetails(details));
       } catch (error) {
         console.error(error);

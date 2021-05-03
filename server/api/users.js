@@ -2,6 +2,7 @@ const router = require('express').Router()
 const { User, Detail } = require('../db')
 module.exports = router
 
+// GET /api/users
 router.get('/', async (req, res, next) => {
   try {
     const users = await User.findAll({
@@ -17,9 +18,9 @@ router.get('/', async (req, res, next) => {
 });
 
 // GET /api/users/:userId       // for profile viewing
-router.get('/users/:userId', async (req, res, next) => {
+router.get('/:userId', async (req, res, next) => {
   try {
-      const profileDetails = await User.getDetail({
+      const profileDetails = await Detail.findOne({
           where: {
               userId: req.params.userId,
           }
