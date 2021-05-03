@@ -105,6 +105,17 @@ const ProfileView = (props) => {
                             Edit Profile
                           </Button>
                         </Grid>
+                        <Grid item>
+                          <Button
+                          className={classes.editButton}
+                            to={`/users/${userId}/imgup`}
+                            component={RouterLink}
+                            color="primary"
+                            variant="contained"
+                          >
+                            Upload Image
+                          </Button>
+                        </Grid>
                       </Grid>
                   </Grid>
                 </CardContent>

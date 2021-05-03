@@ -8,6 +8,7 @@ import AllEvents from './components/AllEvents';
 import SingleEvent from './components/SingleEvent';
 import ProfileView from './components/ProfileView';
 import EditProfile from './components/EditProfile';
+import ImgUploader from './components/ImgUploader';
 import { me } from './store'
 
 /**
@@ -33,6 +34,8 @@ class Routes extends Component {
             <Route path='/events/:eventId' exact component={SingleEvent} />
             <Route path="/users/:userId" exact component={ProfileView} />
             <Route path="/users/:userId/edit" exact component={EditProfile} />
+            <Route path="/users/:userId/imgup" exact component={ImgUploader} />
+
             {/* <Route path="/image-upload/:key" />
             <Route path="/pdf-upload/:key" /> */}
             {/* {isProduction && <Route exact path="/production/events" component={CreateEvent} />} */}

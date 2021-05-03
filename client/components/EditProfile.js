@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { updateUserDetails } from "../store/userDetails";
-import { setProfileImage, setProfilePdf } from "../store/fileDetail";
 
 import {
   Button,
@@ -84,7 +83,7 @@ const EditProfile = ({ values, errors, isSubmitting, setFieldValue }) => {
               />
             </Grid>
             {/* //resume & headshot inserts here */}
-            <Grid>
+            {/* <Grid>
               <label>Headshot file:</label>
               <input
                 as={TextField}
@@ -106,8 +105,8 @@ const EditProfile = ({ values, errors, isSubmitting, setFieldValue }) => {
                   Choose File
                 </Button>
               </label>
-            </Grid>
-            <Grid>
+            </Grid> */}
+            {/* <Grid>
               <label>Resume file:</label>
               <input
                 as={TextField}
@@ -128,10 +127,10 @@ const EditProfile = ({ values, errors, isSubmitting, setFieldValue }) => {
                   Choose File
                 </Button>
               </label>
-            </Grid>
-            <Grid>
-              <Grid item container spacing={2}>
-                <Grid item>
+            </Grid> */}
+            {/*<Grid>
+               <Grid item container spacing={2}>
+                 <Grid item>
                   <Button
                     type="submit"
                     variant="contained"
@@ -142,9 +141,9 @@ const EditProfile = ({ values, errors, isSubmitting, setFieldValue }) => {
                   >
                     Update
                   </Button>
-                </Grid>
+                </Grid> 
               </Grid>
-            </Grid>
+            </Grid>*/}
           </Grid>
         </Form>
       </Box>
@@ -157,8 +156,6 @@ const EditProfileApp = withFormik({
     return {
       displayName: fullName || "",
       // additional pre-population possible depending on how the details in store/state end up working...
-      headshot,
-      resume,
     };
   },
   validationSchema: Yup.object().shape({
@@ -172,25 +169,21 @@ const EditProfileApp = withFormik({
       location,
       contactTel,
       role,
-      headshot,
-      resume,
     } = values;
     console.log("profile save hit!");
     setSubmitting(true);
-    if (headshot) {
-      props.dispatch(setProfileImage(userId));
-    }
-    if (resume) {
-      props.dispatch(setProfilePdf(userId));
-    }
+    // if (headshot) {
+    //   props.dispatch(setProfileImage(userId));
+    // }
+    // if (resume) {
+    //   props.dispatch(setProfilePdf(userId));
+    // }
     props.dispatch(
       updateUserDetails(
         displayName,
         location,
         contactTel,
         role,
-        headshot,
-        resume
       )
     );
     setSubmitting(false);
