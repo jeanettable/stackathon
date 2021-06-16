@@ -23,12 +23,16 @@ export const me = () => async dispatch => {
   console.log('making it to me!');
   const token = window.localStorage.getItem(TOKEN)
   if (token) {
+    try {
     const res = await axios.get('/auth/me', {
       headers: {
         authorization: token
-      }
-    })
+      },
+    });
     return dispatch(setAuth(res.data))
+    } catch (err) {
+      console.error(err);
+    }
   }
 }
 
@@ -72,4 +76,5 @@ export default function(state = {}, action) {
     default:
       return state
   }
-}
+};
+
