@@ -1,12 +1,11 @@
-const { v4: uuid } = require('uuid');
-const {db, User, Event, List } = require('../server/db')
+const {db, User, Event } = require('../server/db')
 
 const users = [
   {
     id: 1,
     email: 'jeanette@test.io',
     password: 'jeanettepw',
-    isProduction: true,
+    userType: 'production',
     last: 'Abell',
     first: 'Jeanette',
   },
@@ -14,7 +13,7 @@ const users = [
     id: 2,
     email: 'ashley@test.io',
     password: 'ashleypw',
-    isProduction: true,
+    userType: 'production',
     last: 'Marinelli',
     first: 'Ashley',
   },
@@ -22,7 +21,7 @@ const users = [
     id: 3,
     email: 'greer@test.io',
     password: 'greerpw',
-    isProduction: true,
+    userType: 'production',
     last: 'Gisy',
     first: 'Greer',
   },
@@ -30,14 +29,14 @@ const users = [
     id: 4,
     email: 'sam@test.io',
     password: 'sampw123',
-    isProduction: false,
+    userType: 'candidate',
     last: 'Jam',
     first: 'Samantha',
   },
   { id: 5, 
     email: 'natalie@test.io',
     password: 'nataliepw',
-    isProduction: false,
+    userType: 'candidate',
     last: 'Williams',
     first: 'Natalie',
   },
@@ -45,7 +44,7 @@ const users = [
     id: 6, 
     email: 'larry@test.io',
     password: 'larrypw',
-    isProduction: true,
+    userType: 'candidate',
     last: 'Lozier',
     first: 'Larry',
   },
@@ -53,7 +52,7 @@ const users = [
     id: 7,
     email: 'dion@test.io',
     password: 'dionpw123',
-    isProduction: false,
+    userType: 'candidate',
     last: 'James',
     first: 'Dion',
   },
@@ -61,7 +60,7 @@ const users = [
     id: 8,
     email: 'benny@test.io',
     password: 'bennypw',
-    isProduction: false,
+    userType: 'candidate',
     last: 'Benny',
     first: 'Jones',
   },
@@ -69,14 +68,14 @@ const users = [
     id: 9,
     email: 'jeanette2@test.io',
     password: 'jeanettepw',
-    isProduction: false,
+    userType: 'candidate',
     last: 'Abell',
     first: 'Jeanette',
   },
   { id: 10,
     email: 'olivia@test.io',
     password: 'oliviapw',
-    isProduction: false,
+    userType: 'candidate',
     last: 'Olivia',
     first: 'Amato',
   },
@@ -94,7 +93,6 @@ const events = [
     productionCo: 'Marinelli Moving Pictures',
     jobLocation: 'Salt Lake City, UT',
     eventLocation: 'Ripley Grier Studios, NY',
-    userId: 1
   },
   {
     title: 'Fall of The House Lab - Male Actors',
@@ -107,7 +105,6 @@ const events = [
     productionCo: 'Marinelli Moving Pictures',
     jobLocation: 'Salt Lake City, UT',
     eventLocation: 'Ripley Grier Studios, NY',
-    userId: 1
   },
   {
     title: 'Music Man - Ensemble Dancers',
@@ -120,7 +117,6 @@ const events = [
     productionCo: 'Blythe Center for Arts & Humanities',
     jobLocation: 'Blythe, TX',
     eventLocation: 'Spaceworks LIC, NY',
-    userId: 5
   },
   {
     title: 'Hamilton - Dancers',
@@ -133,7 +129,6 @@ const events = [
     productionCo: 'Andrew Femenella & Associates',
     jobLocation: 'New York, NY', 
     eventLocation: 'Alvin Ailey Center, NY',
-    userId: 2
   },
 ]
 
@@ -148,15 +143,30 @@ const events = [
       })
     );
 
+    // const lin = User.create()
+
     await Promise.all(
       events.map((event) => {
         return Event.create(event);
       })
     );
-
-    // PRINTS OBJECTS TO CONSOLE:
-    // console.log('allUsers>>> ', allUsers);
-    // console.log('allEvents>>> ', allEvents);
+    
+    // creates a list entry (of production userType)
+    const ashley = await User.findByPk(2);
+    const foth = await Event.findByPk(1);
+    await ashley.addEvent(foth);
+    const candidates = await User.findAll({
+      where: {
+        userType: 'candidate',
+      }
+    });
+    // sign all candidates up for FOTH event
+    await Promise.all(
+      candidates.map((user) => {
+        return user.addEvent(foth);
+      })
+    );
+    
 
   } catch (err) {
     console.log(err);

@@ -15,9 +15,9 @@ const User = db.define('user', {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  isProduction: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false,
+  userType: {
+    type: Sequelize.ENUM(['production', 'candidate']),
+    defaultValue: 'candidate',
   },
   last: {
     type: Sequelize.STRING,
@@ -27,7 +27,7 @@ const User = db.define('user', {
     type: Sequelize.STRING,
     allowNull: false,
   },
-})
+});
 
 module.exports = User
 
